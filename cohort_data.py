@@ -19,6 +19,14 @@ def unique_houses(filename):
 
     return houses
 
+def sorting(list_name, cohort_season, execution_index_1, execution_index_2, conditional_index):
+    cohort = open('cohort_data.txt')
+
+    list_name = [' '.join(line.split('|')[execution_index_1:execution_index_2]) for line in cohort if line.split('|')[conditional_index].startswith(cohort_season)]
+
+    cohort.close()
+ 
+    return list_name
 
 def sort_by_cohort(filename):
     """TODO: Return a list of all cohort lists, including ghosts but not instructors.
@@ -33,35 +41,17 @@ def sort_by_cohort(filename):
     >>> sort_by_cohort("cohort_data.txt")
     [['Harry Potter', 'Mandy Brocklehurst', 'Ron Weasley', 'Oliver Wood', 'Colin Creevey', 'Cho Chang', 'Michael Corner', 'Draco Malfoy', 'Seamus Finnigan', 'Eddie Carmichael', 'Theodore Nott', 'Terence Higgs', 'Hermione Granger', 'Penelope Clearwater', 'Angelina Johnson', 'Dennis Creevey'], ['Neville Longbottom', 'Cedric Diggory', 'Pansy Parkinson', 'Anthony Goldstein', 'Padma Patil', 'Luna Lovegood', 'Eleanor Branstone', 'Lee Jordan', 'Marietta Edgecombe', 'Andrew Kirke', 'Ginny Weasley', 'Mary Macdonald', 'Blaise Zabini', 'Natalie McDonald', 'Adrian Pucey', 'Hannah Abbott', 'Graham Pritchard', 'Susan Bones', 'Roger Davies', 'Owen Cauldwell'], ['Laura Madley', 'Orla Quirke', 'Parvati Patil', 'Eloise Midgeon', 'Zacharias Smith', 'Cormac McLaggen', 'Lisa Turpin', 'Demelza Robins', 'Ernie Macmillan', 'Millicent Bullstrode', 'Percy Weasley', 'Jimmy Peakes', 'Justin Finch-Fletchley', 'Miles Bletchley', 'Malcolm Baddock'], ['Marcus Belby', 'Euan Abercrombie', 'Vincent Crabbe', 'Ritchie Coote', 'Katie Bell', 'Terry Boot', 'Lavender Brown', 'Gregory Goyle', 'Marcus Flint', 'Dean Thomas', 'Jack Sloper', 'Rose Zeller', 'Stewart Ackerley', 'Fred Weasley', 'George Weasley', 'Romilda Vane', 'Alicia Spinnet', 'Kevin Whitby'], ['Friendly Friar', 'Grey Lady', 'Nearly Headless Nick', 'Bloody Baron']]
     """
-    
-    cohort = open(filename)
 
     all_students = []
-    spring_16 = []
-    summer_16 = []
-    fall_15 = []
-    ghosts = []
-
-    def sort_seasons(list_name, cohort_season):
-        cohort = open('cohort_data.txt')
-
-        list_name = [' '.join(line.split('|')[0:2]) for line in cohort if line.split('|')[-1].startswith(cohort_season)]
-
-        cohort.close()
-     
-        return list_name
-
-
-    winter = sort_seasons('winter_16', "Winter 2016")
-    spring = sort_seasons('spring_16', "Spring 2016")
-    summer = sort_seasons('summer_16', "Summer 2016")
-    fall = sort_seasons('fall_15', "Fall 2015")
-    ghosts = sort_seasons(ghosts, "G")
+    winter = sorting('winter_16', "Winter 2016", 0, 2, -1)
+    spring = sorting('spring_16', "Spring 2016", 0, 2, -1)
+    summer = sorting('summer_16', "Summer 2016", 0, 2, -1)
+    fall = sorting('fall_15', "Fall 2015", 0, 2, -1)
+    ghosts = sorting('ghosts', "G", 0, 2, -1)
     
-    all_students = [fall] + [winter] + [spring] + [summer] + [ghosts]
+    all_students.extend([fall,winter,spring,summer,ghosts])
 
     #all_students = all_students.append(winter_16, spring_16, summer_16, fall_15)
-    # Code goes here
 
     return all_students
 
@@ -81,15 +71,15 @@ def hogwarts_by_house(filename):
     """
 
     all_hogwarts = []
-    dumbledores_army = []
-    gryffindor = []
-    hufflepuff = []
-    ravenclaw = []
-    slytherin = []
-    ghosts = []
-    instructors = []
+    dumbledores_army = sorted(sorting('du', 'Dumble', 1, 2, 2))
+    gryffindor = sorted(sorting('gr', 'Gryff', 1, 2, 2))
+    hufflepuff = sorted(sorting('hu', 'Huff', 1, 2, 2))
+    ravenclaw = sorted(sorting('ra', 'Raven', 1, 2, 2))
+    slytherin = sorted(sorting('sl', 'Slyther', 1, 2, 2))
+    ghosts = sorted(sorting('gh', 'G', 1, 2, -1))
+    instructors = sorted(sorting('in', 'I', 1, 2, -1))
 
-    # Code goes here
+    all_hogwarts.extend([dumbledores_army, gryffindor, hufflepuff, ravenclaw, slytherin, ghosts, instructors])
 
     return all_hogwarts
 
