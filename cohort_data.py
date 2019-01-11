@@ -14,7 +14,6 @@ def unique_houses(filename):
 
     """
 
-    houses = set()
     cohort = open(filename)
     houses = set([line.split('|')[2] for line in cohort if line.split('|')[2] != ''])
 
@@ -34,14 +33,34 @@ def sort_by_cohort(filename):
     >>> sort_by_cohort("cohort_data.txt")
     [['Harry Potter', 'Mandy Brocklehurst', 'Ron Weasley', 'Oliver Wood', 'Colin Creevey', 'Cho Chang', 'Michael Corner', 'Draco Malfoy', 'Seamus Finnigan', 'Eddie Carmichael', 'Theodore Nott', 'Terence Higgs', 'Hermione Granger', 'Penelope Clearwater', 'Angelina Johnson', 'Dennis Creevey'], ['Neville Longbottom', 'Cedric Diggory', 'Pansy Parkinson', 'Anthony Goldstein', 'Padma Patil', 'Luna Lovegood', 'Eleanor Branstone', 'Lee Jordan', 'Marietta Edgecombe', 'Andrew Kirke', 'Ginny Weasley', 'Mary Macdonald', 'Blaise Zabini', 'Natalie McDonald', 'Adrian Pucey', 'Hannah Abbott', 'Graham Pritchard', 'Susan Bones', 'Roger Davies', 'Owen Cauldwell'], ['Laura Madley', 'Orla Quirke', 'Parvati Patil', 'Eloise Midgeon', 'Zacharias Smith', 'Cormac McLaggen', 'Lisa Turpin', 'Demelza Robins', 'Ernie Macmillan', 'Millicent Bullstrode', 'Percy Weasley', 'Jimmy Peakes', 'Justin Finch-Fletchley', 'Miles Bletchley', 'Malcolm Baddock'], ['Marcus Belby', 'Euan Abercrombie', 'Vincent Crabbe', 'Ritchie Coote', 'Katie Bell', 'Terry Boot', 'Lavender Brown', 'Gregory Goyle', 'Marcus Flint', 'Dean Thomas', 'Jack Sloper', 'Rose Zeller', 'Stewart Ackerley', 'Fred Weasley', 'George Weasley', 'Romilda Vane', 'Alicia Spinnet', 'Kevin Whitby'], ['Friendly Friar', 'Grey Lady', 'Nearly Headless Nick', 'Bloody Baron']]
     """
+    
+    cohort = open(filename)
 
     all_students = []
-    winter_16 = []
     spring_16 = []
     summer_16 = []
     fall_15 = []
     ghosts = []
 
+    def sort_seasons(list_name, cohort_season):
+        cohort = open('cohort_data.txt')
+
+        list_name = [' '.join(line.split('|')[0:2]) for line in cohort if line.split('|')[-1].startswith(cohort_season)]
+
+        cohort.close()
+     
+        return list_name
+
+
+    winter = sort_seasons('winter_16', "Winter 2016")
+    spring = sort_seasons('spring_16', "Spring 2016")
+    summer = sort_seasons('summer_16', "Summer 2016")
+    fall = sort_seasons('fall_15', "Fall 2015")
+    ghosts = sort_seasons(ghosts, "G")
+    
+    all_students = [fall] + [winter] + [spring] + [summer] + [ghosts]
+
+    #all_students = all_students.append(winter_16, spring_16, summer_16, fall_15)
     # Code goes here
 
     return all_students
