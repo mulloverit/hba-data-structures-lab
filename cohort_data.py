@@ -116,7 +116,7 @@ def all_students_tuple_list(filename):
             student_attributes[1] = full_name
             student_attributes.pop(0)
             student_list.append(tuple(student_attributes))
-        
+
     return student_list
 
 
@@ -139,8 +139,12 @@ def find_cohort_by_student_name(student_list):
     'Student not found.'
 
     """
+    print(all_students_tuple_list('cohort_data.txt'))
 
-    # Code goes here
+    name = input('Who are you looking for? \n')
+    for tup in student_list:
+        if tup[0] == name:
+            return tup[-1]
 
     return "Student not found."
 
@@ -201,8 +205,8 @@ def find_house_members_by_student_name(student_list):
 
 #############################################################################
 # Here is some useful code to run these functions without doctests!
-
-# find_cohort_by_student_name(all_students_data)
+all_students_data = all_students_tuple_list('cohort_data.txt')
+print(find_cohort_by_student_name(all_students_data))
 # find_house_members_by_student_name(all_students_data)
 
 
